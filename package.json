@@ -15,13 +15,20 @@
     "node": ">=18"
   },
   "scripts": {
+    "prepare": "simple-git-hooks",
     "build": "run-p build:*",
     "build:common": "tsc",
     "build:esm": "tsc -p tsconfig.esm.json",
     "rebuild": "rimraf dist && run-p build:*",
     "prebuild": "rimraf dist",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint --fix ./src",
+    "lint:prettier": "prettier --write ./src",
     "test": "jest",
     "test:report": "npx http-server -o coverage/lcov-report"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn test && yarn run lint"
   },
   "repository": {
     "type": "git",
@@ -46,6 +53,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
+    "simple-git-hooks": "^2.8.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
